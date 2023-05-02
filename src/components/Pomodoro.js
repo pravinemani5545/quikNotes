@@ -1,28 +1,47 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 import "./styles.css";
 
 export default function Pomodoro() {
 
-    const [minutes, setMinutes] = useState(1)
-    const [seconds, setSeconds] = useState(0)
+    const pomoComps = useRef(0)
+    const isBreak = useRef(false)
     const [displayMessage, setDisplayMessage] = useState(false)
     const [startTimer, setStartTimer] = useState(false)
+    const [seconds, setSeconds] = useState(1500)
 
+    //setSeconds(totalSeconds)
     useEffect(() => {
         let interval = setInterval(() => {
             clearInterval(interval);
             if (startTimer) {
                 if (seconds === 0) {
-                    if (minutes !== 0) {
+                    if (seconds % 60 == 0 && seconds !== 0) {
                         setSeconds(59);
-                        setMinutes(minutes - 1);
                     } else {
-                        let minutes = displayMessage ? 24 : 4;
-                        let seconds = 59;
+                        isBreak.current = isBreak.current == false ? true : false
+                        console.log(isBreak.current)
+                        if (isBreak.current == true) {
+                            if (pomoComps.current == 4) {
+                                pomoComps.current = 0;
+                                console.log(pomoComps.current)
+                                alert("longbr")
+                                setSeconds(600)
+                                setStartTimer(prev => !prev)
+                            } else {
+                                pomoComps.current = pomoComps.current + 1;
+                                console.log(pomoComps.current)
+                                alert("shortbr")
+                                setSeconds(300)
+                                setStartTimer(prev => !prev)
+                            }
+                        } else {
+                            alert("work")
+                            setSeconds(1500)
+                            setStartTimer(prev => !prev)
+                        }
 
-                        setSeconds(seconds);
-                        setMinutes(minutes);
-                        setDisplayMessage(!displayMessage);
                     }
                 } else {
                     setSeconds(seconds - 1);
@@ -30,23 +49,47 @@ export default function Pomodoro() {
                 }
             }
         }, 1000);
+        return () => {
+            clearInterval(interval);
+        };
     }, [seconds, startTimer])
 
     function handleClick() {
         setStartTimer(prev => !prev)
     }
 
-    const timerMinutes = minutes < 10 ? `0${minutes}` : minutes;
-    const timerSeconds = seconds < 10 ? `0${seconds}` : seconds;
+    function handlePomoClick() {
+        setSeconds(1500)
+    }
+
+
+    function handleShortClick() {
+        isBreak.current = true
+        setSeconds(300)
+        setStartTimer(prev => !prev)
+    }
+
+    function handleLongClick() {
+        isBreak.current = true
+        setSeconds(600)
+        setStartTimer(prev => !prev)
+    }
+
+
+
+
+    const timerMinutes = Math.floor(seconds / 60);
+    const timerSeconds = (seconds % 60) >= 10 ? seconds % 60 : '0' + seconds % 60;
 
     return (
         <div className="pomo">
             <div className="pomo--container">
+
                 <div>
                     <ul className="pomo--content">
-                        <li>Pomodoro</li>
-                        <li>Short Break</li>
-                        <li>Long Break</li>
+                        <li><button onClick={handlePomoClick}>Pomodoro</button></li>
+                        <li><button onClick={handleShortClick}>Short Break</button></li>
+                        <li><button onClick={handleLongClick}>Long Break</button></li>
                     </ul>
                     <div className="timer">
                         <h1>{timerMinutes}:{timerSeconds}</h1>
@@ -54,6 +97,11 @@ export default function Pomodoro() {
                             Start/Stop Timer
                         </button>
                     </div>
+                    {/* <CircularProgressbar
+                        value={seconds}
+                        text={minutes + ':' + seconds}
+                    /> */}
+
                 </div>
             </div>
         </div>

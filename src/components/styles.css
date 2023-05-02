@@ -15,10 +15,13 @@ button {
 
 .react-kanban-card__title {
     font-size: large;
-    /* text-decoration: underline; */
     font-style: italic;
 }
 
+.container {
+    margin-top: 150px;
+    height: 700px;
+}
 
 
 /* .react-datepicker-wrapper,
@@ -50,18 +53,26 @@ p {
     padding: 5px 0px;
 }
 
+li a {
+    text-decoration: none;
+    color: black;
+}
+
 .pomo {
     margin: 20px auto;
-    height: 500px;
-    width: 700px;
-    background-color: grey;
+    /* height: 900px;
+    width: 1000px;
+    background-color: grey; */
+    color: white;
+    font-size: 40px;
+    font-family: "Courier New", monospace;
 }
 
 .pomo--container {
-    height: 160px;
-    width: 500px;
+    height: 470px;
+    width: 800px;
     margin: auto;
-    background-color: #A8D0E6;
+    /* background-color: #A8D0E6; */
 }
 
 .pomo--content {
@@ -69,12 +80,71 @@ p {
 }
 
 .pomo--content li {
-    margin: 20px 0;
+    margin: 10px 0;
     flex-grow: 1;
     text-align: center;
 }
 
+.pomo--content button {
+    box-sizing: border-box;
+    font: 400 24px system-ui;
+    padding: 4px 10px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: white;
+    background-color: transparent;
+    color: white;
+    border-radius: 5px;
+}
+
+.pomo--content button:hover {
+    background-color: white;
+    /* Green */
+    color: black;
+    border-color: black;
+
+}
+
+.timer h1 {
+    text-align: center;
+    font-size: 220px;
+}
+
 .timer {
     text-align: center;
+}
+
+.timer button {
+    width: 200px;
+    height: 80px;
+    font: 400 24px system-ui;
+    color: white;
+    border-style: solid;
+    border-color: white;
+    background-color: transparent;
+    border-radius: 8px;
+}
+
+.timer button:hover {
+    width: 200px;
+    height: 80px;
+    font: 400 24px system-ui;
+    color: black;
+    border-color: black;
+    background-color: white;
+    border-radius: 8px;
+}
+
+.SpotifyPlayer {
+    margin: 20px auto;
+    width: 700px;
+    display: block;
+}
+
+
+.about {
+    background-color: black;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
 }
